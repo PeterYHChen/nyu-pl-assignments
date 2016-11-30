@@ -74,13 +74,34 @@ fun labels empty = []
 
 (* Question 7: replace function *)
 fun replace (op ==) x y empty = empty
-| replace (op ==) x y (leaf z) = 
+| replace (op ==) x y (leaf z) =
     if x==z then 
-        leaf y
+        (leaf y)
     else
-        leaf z
+        (leaf z)
 | replace (op ==) x y (node (z, L, R)) = 
     if x==z then 
         node (y, (replace (op ==) x y L), (replace (op ==) x y R))
     else 
         node (z, (replace (op ==) x y L), (replace (op ==) x y R));
+
+
+(* Question 8: replaceEmpty function *)
+fun replaceEmpty y empty = y
+| replaceEmpty y (leaf z) = (leaf z)
+| replaceEmpty y (node (z, L, R)) = node (z, (replaceEmpty y L), (replaceEmpty y R));
+
+
+(* Question 9: mapTree function *)
+fun mapTree f empty = f empty
+| mapTree f (leaf x) = f (leaf x)
+| mapTree f (node (x, L, R)) = 
+    let
+        val (node (a, L1, R1)) = f (node (x, L, R))
+    in
+        node (a, (mapTree f L1), (mapTree f R1))
+    end;
+
+
+(* Question 10: sortTree function *)
+fun sortTree (op <) T = mapTree (fn empty => empty | (leaf x) => leaf (sort (op <) x) | (node (x, L, R)) => node ((sort (op <) x), L, R)) T;
