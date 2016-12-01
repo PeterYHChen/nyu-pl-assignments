@@ -73,14 +73,15 @@ fun labels empty = []
 
 
 (* Question 7: replace function *)
+infix ==;
 fun replace (op ==) x y empty = empty
 | replace (op ==) x y (leaf z) =
-    if x==z then 
+    if (x == z) then 
         (leaf y)
     else
         (leaf z)
 | replace (op ==) x y (node (z, L, R)) = 
-    if x==z then 
+    if (x == z) then 
         node (y, (replace (op ==) x y L), (replace (op ==) x y R))
     else 
         node (z, (replace (op ==) x y L), (replace (op ==) x y R));
