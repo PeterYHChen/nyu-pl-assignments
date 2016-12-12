@@ -1,3 +1,6 @@
 # ada output files
 *.o
 *.ali
+*.idea
+*.iml
+*.class
